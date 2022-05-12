@@ -1,32 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
-export default class extends Component {
-  render() {
-    return (
-      <div>
-        <div classname="home_picture">
-          <img />
-        </div>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            {testimonials.map((testimony, index) => (
-              <Grid item xs={3}>
-                <Item>
-                  <TestimonialCard testimonial={testimony} unique={index} />
-                </Item>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+export const Homepage = () => {
+  return (
+    <div>
+      <div classname="home_picture">
+        <img />
       </div>
-    );
-  }
-}
+      <Box
+        sx={{ flexGrow: 1, width: 0.7 }}
+        alignSelf="center"
+        alignItems="center-horizontal"
+      >
+        <Grid container spacing={2}>
+          {testimonials.map((testimony, index) => (
+            <Grid item xs={3}>
+              <TestimonialCard testimonial={testimony} unique={index} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </div>
+  );
+};
 
 const TestimonialCard = (props) => {
   return (
