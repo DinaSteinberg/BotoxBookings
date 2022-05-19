@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import logo from "./logo.jpg";
 
 const pages = [
   { title: "Home", path: "/" },
@@ -100,11 +101,9 @@ export const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleLogoClick} sx={{ p: 0 }}>
-                <Avatar alt="The logo" src="./logo.jpg" />
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleLogoClick} sx={{ p: 0 }}>
+              <Avatar alt="A" src={logo} />
+            </IconButton>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"

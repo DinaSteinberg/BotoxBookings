@@ -9,6 +9,8 @@ export function UserReducer(state, action) {
         reference: action.reference,
         submitted: action.submitted,
       };
+    case "signUpdate":
+      return { ...state, sign: action.sign };
 
     default:
       throw new Error(`Todo Reducer does not recognize ${action.type}`);

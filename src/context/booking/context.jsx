@@ -10,6 +10,7 @@ export const BookingProvider = (props) => {
     email: "",
     reference: "",
     submitted: false,
+    sign: false,
   });
 
   return (

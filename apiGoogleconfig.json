@@ -1,6 +1,6 @@
 {
-    "clientId": "<CLIENT_ID>",
-    "apiKey": "<API_KEY>",
+    "clientId":"774541693087-bvae5jevhit1gcf8irikmeii9fragatv.apps.googleusercontent.com",
+    "apiKey": "AIzaSyBWYOz7yQynF0NnkhgzGv8B1BKlJWI0JkU",
     "scope": "https://www.googleapis.com/auth/calendar",
     "discoveryDocs": [
       "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"

@@ -7,24 +7,34 @@ import Box from "@mui/material/Box";
 
 export const Homepage = () => {
   return (
-    <div>
-      <div classname="home_picture">
-        <img />
+    <>
+      <div>
+        <div className="home_picture">
+          <h1 style={{ textAlign: "center", color: "blue" }}>
+            Welcome to Botox Bookings, where all your wrinkles fade away!
+          </h1>
+          <img
+            alt="home_pic"
+            style={{ margin: "50px" }}
+            width="70%"
+            src="https://www.advancedrejuvenationcenters.com/wp-content/uploads/2019/11/botox_cosmetic_advanced_rejuvenation_centers.jpg"
+          />
+        </div>
+        <Box
+          sx={{ flexGrow: 1, width: 0.7, align: "center" }}
+          alignSelf="center"
+          alignItems="center-horizontal"
+        >
+          <Grid container spacing={2} justify="center">
+            {testimonials.map((testimony, index) => (
+              <Grid item xs={3}>
+                <TestimonialCard testimonial={testimony} unique={index} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </div>
-      <Box
-        sx={{ flexGrow: 1, width: 0.7 }}
-        alignSelf="center"
-        alignItems="center-horizontal"
-      >
-        <Grid container spacing={2}>
-          {testimonials.map((testimony, index) => (
-            <Grid item xs={3}>
-              <TestimonialCard testimonial={testimony} unique={index} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </div>
+    </>
   );
 };
 

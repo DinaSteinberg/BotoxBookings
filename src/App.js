@@ -9,6 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 import {BookingProvider} from "./context/booking/context.jsx";
+import {Booking} from "./components/booking/booking.jsx";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Header/>
             <Routes>
               <Route path="/" element={<Homepage />}/>
-              <Route path="/booking" element={<Quickstart />} />
+              <Route path="/booking" element={<Booking />} />
               {/* <Route path="/contact" element={<Contact />} />*/}
               <Route path="/myAccount" element={<CreateAccount />} /> 
             </Routes>
