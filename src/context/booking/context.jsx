@@ -11,12 +11,11 @@ export const BookingProvider = (props) => {
     reference: "",
     submitted: false,
     sign: false,
+    events: [],
   });
 
   return (
     <BookingContext.Provider
-      // context value has the todos state and also the dispatch function
-      // so the todos can be updated from any part of the app
       value={{
         userInfo: state,
         dispatch: dispatch,

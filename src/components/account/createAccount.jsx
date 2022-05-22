@@ -1,12 +1,14 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import { BookingContext } from "../../context/booking/context";
+import { useNavigate } from "react-router-dom";
 
 export const CreateAccount = () => {
+  const navigate = useNavigate();
   const { userInfo, dispatch } = useContext(BookingContext);
   const [reference, setReference] = useState("friend");
   const [first_name, setFirstName] = useState(userInfo.first_name);
@@ -53,6 +55,9 @@ export const CreateAccount = () => {
       );
     }
   }
+  const signInPage = () => {
+    navigate("/signIn");
+  };
 
   const formPage = (
     <div>
@@ -116,6 +121,11 @@ export const CreateAccount = () => {
         {showError && (
           <Alert severity="error">Required fields were left out!</Alert>
         )}
+        <br />
+        Already have an account?
+        <Button sx={{ m: 2 }} variant="contained" onClick={() => signInPage()}>
+          Sign In
+        </Button>
       </Box>
     </div>
   );

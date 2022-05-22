@@ -41,28 +41,36 @@ export const Booking = () => {
 
   const handleClientLoad = () => {
     //authorize the click
-    ApiCalendar.onLoad(() => {
-      ApiCalendar.handleAuthClick()
-        .then(() => {
-          console.log("sign in succesful!");
-          dispatch({ type: "signUdate", sign: true });
-          ApiCalendar.listUpcomingEvents(100, CALENDAR_ID)
-            .then((res) => {
-              console.log("Listing upcoming events");
-              console.log(res.result);
-              return res.result;
-            })
-            .then((data) => {
-              if (data?.items) {
-                setEvents(formatEvents(data.items));
-              }
-              console.log(events);
-            });
-        })
-        .catch((e) => {
-          console.error(`sign in failed ${e}`);
-        });
-    });
+    if (!userInfo.sign) {
+      ApiCalendar.onLoad(() => {
+        ApiCalendar.handleAuthClick()
+          .then(() => {
+            console.log("sign in succesful!");
+            dispatch({ type: "signUpdate", sign: true });
+            loadUpcomingEvents();
+          })
+          .catch((e) => {
+            console.error(`sign in failed ${e}`);
+          });
+      });
+    } else {
+      loadUpcomingEvents();
+    }
+  };
+
+  const loadUpcomingEvents = () => {
+    ApiCalendar.listUpcomingEvents(100, CALENDAR_ID)
+      .then((res) => {
+        console.log("Listing upcoming events");
+        console.log(res.result);
+        return res.result;
+      })
+      .then((data) => {
+        if (data?.items) {
+          setEvents(formatEvents(data.items));
+        }
+        console.log(events);
+      });
   };
 
   const formatEvents = (list) => {
@@ -132,8 +140,13 @@ export const Booking = () => {
 
   const bookAppointment = () => {
     ApiCalendar.updateEvent(
-      { atendees: [{ email: userInfo.email, displayName: "Patient" }] },
-      selectedEvent.id
+      {
+        start: { dateTime: selectedEvent.start },
+        end: { dateTime: selectedEvent.end },
+        attendees: [{ email: userInfo.email, displayName: "Patient" }],
+      },
+      selectedEvent.id,
+      CALENDAR_ID
     )
       .then((result) => {
         if (!result.ok) return result;
@@ -203,23 +216,21 @@ export const Booking = () => {
           {selectedDate} {selectedEvent.title}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <TextField
-              sx={{ width: 250 }}
-              id="select-treatment"
-              select
-              label="Select the type of treatment:  "
-              value={treatment}
-              onChange={handleChange}
-              variant="standard"
-            >
-              {treatments.map((option, index) => (
-                <MenuItem key={index} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-          </DialogContentText>
+          <TextField
+            sx={{ width: 250 }}
+            id="select-treatment"
+            select
+            label="Select the type of treatment:  "
+            value={treatment}
+            onChange={handleChange}
+            variant="standard"
+          >
+            {treatments.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
