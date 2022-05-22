@@ -21,13 +21,20 @@ export const Homepage = () => {
           />
         </div>
         <Box
-          sx={{ flexGrow: 1, width: 0.7, align: "center" }}
-          alignSelf="center"
+          sx={{
+            flexGrow: 1,
+            justifyContent: "center",
+          }}
           alignItems="center-horizontal"
         >
-          <Grid container spacing={2} justify="center">
+          <Grid container spacing={2}>
             {testimonials.map((testimony, index) => (
-              <Grid item xs={3}>
+              <Grid
+                item
+                xs={3}
+                md={3}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
                 <TestimonialCard testimonial={testimony} unique={index} />
               </Grid>
             ))}
