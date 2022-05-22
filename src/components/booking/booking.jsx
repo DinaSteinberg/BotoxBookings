@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Alert from "@mui/material/Alert";
+import Tooltip from "@mui/material/Tooltip";
 import { BookingContext } from "../../context/booking/context";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +20,7 @@ export const Booking = (props) => {
   const [events, setEvents] = useState(null);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
+  const [booked, setBooked] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [treatment, setTreatment] = useState("");
@@ -86,7 +88,6 @@ export const Booking = (props) => {
       start: item.start.dateTime || item.start.date,
       end: item.end.dateTime || item.end.date,
       alreadyBooked: item.attendees !== undefined,
-      patient: item.attendees || "",
     }));
   };
 
