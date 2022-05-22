@@ -43,16 +43,15 @@ export const CreateAccount = () => {
     if (first_name === "" || last_name === "" || email === "") {
       setShowError(true);
     } else {
-      console.log(
-        dispatch({
-          type: "submit",
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          reference: reference,
-          submitted: true,
-        })
-      );
+      dispatch({
+        type: "submit",
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        reference: reference,
+        submitted: true,
+      });
+      navigate("/booking");
     }
   }
   const signInPage = () => {

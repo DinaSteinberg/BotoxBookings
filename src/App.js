@@ -1,6 +1,5 @@
 import './App.css';
 import {Header} from './components/header/header';
-
 import {
   HashRouter,
   Routes,
@@ -24,7 +23,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />}/>
               <Route path="/booking" element={<Booking />} />
-              {/* <Route path="/contact" element={<Contact />} /> */}
               <Route path="/createAccount" element={<CreateAccount />} /> 
               <Route path="/signIn" element={<SignIn />} />
               <Route path="/myAccount" element={<MyAccount />} />

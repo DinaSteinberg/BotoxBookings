@@ -19,7 +19,6 @@ export const Header = () => {
   const pages = [
     { title: "Home", path: "/" },
     { title: "Booking", path: "/booking" },
-    { title: "Contact", path: "/contact" },
     {
       title: !userInfo.submitted ? "Create Account" : "My Account",
       path: !userInfo.submitted ? "/createAccount" : "/myAccount",

@@ -49,7 +49,10 @@ export const Booking = (props) => {
           .then(() => {
             console.log("sign in succesful!");
             dispatch({ type: "signUpdate", sign: true });
-            loadUpcomingEvents();
+            loadUpcomingEvents(function (data) {
+              console.log("Events: " + data.map((e) => console.log(e)));
+              dispatch({ type: "updateEvents", events: data });
+            });
           })
           .catch((e) => {
             console.error(`sign in failed ${e}`);
@@ -60,17 +63,18 @@ export const Booking = (props) => {
     }
   };
 
-  const loadUpcomingEvents = () => {
+  const loadUpcomingEvents = (_callback) => {
     ApiCalendar.listUpcomingEvents(100, CALENDAR_ID)
       .then((res) => {
         console.log("Listing upcoming events");
-        console.log(res.result);
+        console.log("Res.result: " + res.result);
         return res.result;
       })
       .then((data) => {
         if (data?.items) {
           console.log("formatting events");
           setEvents(formatEvents(data.items));
+          _callback(data.items);
         }
       });
   };
@@ -156,14 +160,14 @@ export const Booking = (props) => {
           console.log("Successfully updated!!!!!!!!!!!!!!!!!!!!!!! 8D8D8D8D");
         })
         .catch((e) => {
-          console.error(e);
+          console.log(e);
         });
       handleClose();
     } else setShowError(true);
   };
 
   const handleLogin = () => {
-    let path = "/myAccount";
+    let path = "/signIn";
     navigate(path);
   };
 
@@ -186,7 +190,7 @@ export const Booking = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={setError(false)}>Cancel</Button>
           <Button onClick={handleLogin} autoFocus>
             Sign In
           </Button>
