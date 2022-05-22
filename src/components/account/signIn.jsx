@@ -23,7 +23,7 @@ export const SignIn = () => {
         last_name: lname,
         submitted: true,
       });
-      navigate("/myAccount");
+      navigate("/booking");
     } else setShowError(true);
   };
 

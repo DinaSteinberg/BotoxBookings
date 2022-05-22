@@ -10,10 +10,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import Alert from "@mui/material/Alert";
 import { BookingContext } from "../../context/booking/context";
 import { useNavigate } from "react-router-dom";
 
-export const Booking = () => {
+export const Booking = (props) => {
   const navigate = useNavigate();
   const [events, setEvents] = useState(null);
   const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ export const Booking = () => {
   const { userInfo, dispatch } = useContext(BookingContext);
   const treatments = ["Botox", "Fillers", "Other"];
   const CALENDAR_ID = "ku77essnlhbq1afvib3jcsqmk8@group.calendar.google.com";
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     //create a script element in the html that will access the google api.
@@ -67,9 +69,9 @@ export const Booking = () => {
       })
       .then((data) => {
         if (data?.items) {
+          console.log("formatting events");
           setEvents(formatEvents(data.items));
         }
-        console.log(events);
       });
   };
 
@@ -79,25 +81,27 @@ export const Booking = () => {
       title: item.summary,
       start: item.start.dateTime || item.start.date,
       end: item.end.dateTime || item.end.date,
+      alreadyBooked: item.attendees !== undefined,
+      patient: item.attendees || "",
     }));
   };
 
   const handleDateSelect = (clickInfo) => {
-    if (!userInfo.email) {
-      setError(true);
-    } else {
-      setOpen(true);
-      setSelectedEvent(clickInfo.event);
-      var date = new Date(clickInfo.event.startStr);
-      var end_date = new Date(clickInfo.event.endStr);
-      var str =
-        calculateMonth(date.getMonth()) +
-        " " +
-        date.getDate() +
-        ", " +
-        date.getFullYear();
-      setSelectedDate(str);
-      console.log(clickInfo.event);
+    if (!clickInfo.event.extendedProps.alreadyBooked) {
+      if (!userInfo.email) {
+        setError(true);
+      } else {
+        setOpen(true);
+        setSelectedEvent(clickInfo.event);
+        var date = new Date(clickInfo.event.startStr);
+        var str =
+          calculateMonth(date.getMonth()) +
+          " " +
+          date.getDate() +
+          ", " +
+          date.getFullYear();
+        setSelectedDate(str);
+      }
     }
   };
 
@@ -127,11 +131,9 @@ export const Booking = () => {
         return "November";
       case 11:
         return "December";
+      default:
+        return "NotAMonth";
     }
-  };
-
-  const handleChange = (event) => {
-    setTreatment(event.target.value);
   };
 
   const handleClose = () => {
@@ -139,23 +141,25 @@ export const Booking = () => {
   };
 
   const bookAppointment = () => {
-    ApiCalendar.updateEvent(
-      {
-        start: { dateTime: selectedEvent.start },
-        end: { dateTime: selectedEvent.end },
-        attendees: [{ email: userInfo.email, displayName: "Patient" }],
-      },
-      selectedEvent.id,
-      CALENDAR_ID
-    )
-      .then((result) => {
-        if (!result.ok) return result;
-        console.log("Successfully updated!!!!!!!!!!!!!!!!!!!!!!! 8D8D8D8D");
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-    handleClose();
+    if (treatment !== "") {
+      ApiCalendar.updateEvent(
+        {
+          start: { dateTime: selectedEvent.start },
+          end: { dateTime: selectedEvent.end },
+          attendees: [{ email: userInfo.email, displayName: "Patient" }],
+        },
+        selectedEvent.id,
+        CALENDAR_ID
+      )
+        .then((result) => {
+          if (!result.ok) return result;
+          console.log("Successfully updated!!!!!!!!!!!!!!!!!!!!!!! 8D8D8D8D");
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+      handleClose();
+    } else setShowError(true);
   };
 
   const handleLogin = () => {
@@ -200,10 +204,7 @@ export const Booking = () => {
         editable={true}
         selectable={true}
         selectMirror={true}
-        //select={this.handleDateSelect}
-        //eventContent={renderEventContent} // custom render function
         eventClick={handleDateSelect}
-        //eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
       />
 
       <Dialog
@@ -216,13 +217,16 @@ export const Booking = () => {
           {selectedDate} {selectedEvent.title}
         </DialogTitle>
         <DialogContent>
+          {showError && (
+            <Alert severity="error">Required fields were left out!</Alert>
+          )}
           <TextField
             sx={{ width: 250 }}
             id="select-treatment"
             select
             label="Select the type of treatment:  "
             value={treatment}
-            onChange={handleChange}
+            onChange={(event) => setTreatment(event.target.value)}
             variant="standard"
           >
             {treatments.map((option, index) => (
