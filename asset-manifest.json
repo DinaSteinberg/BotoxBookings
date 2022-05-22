@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/BotoxBookings/static/css/main.d3a9949f.css",
-    "main.js": "/BotoxBookings/static/js/main.657cfff9.js",
+    "main.js": "/BotoxBookings/static/js/main.c0eb7b7f.js",
     "static/js/787.0fe84981.chunk.js": "/BotoxBookings/static/js/787.0fe84981.chunk.js",
     "static/media/Picture1.png": "/BotoxBookings/static/media/Picture1.59a7f51bc8ef30ebaf01.png",
     "index.html": "/BotoxBookings/index.html",
     "main.d3a9949f.css.map": "/BotoxBookings/static/css/main.d3a9949f.css.map",
-    "main.657cfff9.js.map": "/BotoxBookings/static/js/main.657cfff9.js.map",
+    "main.c0eb7b7f.js.map": "/BotoxBookings/static/js/main.c0eb7b7f.js.map",
     "787.0fe84981.chunk.js.map": "/BotoxBookings/static/js/787.0fe84981.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d3a9949f.css",
-    "static/js/main.657cfff9.js"
+    "static/js/main.c0eb7b7f.js"
   ]
 }
